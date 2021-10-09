@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="app.js"></script>
+  <title>To Do App</title>
+</head>
+<body>
+  <nav class="d-flex justify-content-center">
+    <h1>To do App</h1>
+  </nav>
+  <div class="d-flex">
+
+    <div class="split col-3 m-3">
+      <div class="allTasks">
+        <h2>Lists</h2>
+        <ul class="taskList d-flex flex-column align-items-start" data-lists>
+          <li class="listNames">Homework</li>
+          <li class="listNames">Work</li>
+          <li class="listNames">PluralSight</li>
+        </ul>
+    
+        <form action="" data-new-list-form>
+          <input type="text" name="xxx" id="xxx" data-new-list-name placeholder="Enter in list Name">
+          <Button class="btn create ">+</Button>
+        </form>
+      </div>
+    </div>
+    <div class="secondHalf col-8 m-3" data-display-container>
+      <div class="taskBox" >
+        <div class="topTitle" >
+          <h2 data-list-title >Title</h2>
+          <p data-list-count>There list remaining</p>
+        </div>
+        <div class="taskBody m-1" data-tasks>
+          hello
+        </div>
+      </div>
+      <button>Clear Tasks</button>
+      <button class="btn delete" data-delete-list-btn>Delete</button>
+    </div>
+  </div>
+
+
+
+
+
+
+</body>
+</html>
