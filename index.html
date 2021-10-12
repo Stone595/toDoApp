@@ -34,17 +34,28 @@
       <div class="taskBox" >
         <div class="topTitle" >
           <h2 data-list-title >Title</h2>
-          <p data-list-count>There list remaining</p>
+          
         </div>
-        <div class="taskBody m-1" data-tasks>
-          hello
+        <div id = 'tasksData'class="taskBody m-1" data-tasks>
+          <div class="task">
+          </div>
+        </div>
+        
+        <div>
+          <input type="text" id="taskTitle" data-create-task placeholder="Enter in task"name="taskTitle">
+          <Button onclick="addNewTasks()" class="btn create ">+</Button>
         </div>
       </div>
-      <button>Clear Tasks</button>
-      <button class="btn delete" data-delete-list-btn>Delete</button>
+      <button class="btn clear" onclick="clearTasks()">Clear Tasks</button>
+      <button class="btn delete" onclick="deleteList()"data-delete-list-btn>Delete</button>
     </div>
   </div>
-
+  <template id = "taskTemplate">
+    <div class="tasks">
+      <input type="checkbox">
+      <label class="customCheck"></label>
+    </div>
+  </template>
 
 
 
