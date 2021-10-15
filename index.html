@@ -15,7 +15,7 @@
   </nav>
   <div class="d-flex">
 
-    <div class="split col-3 m-3">
+    <div id="listSide" class="split col-3 m-3">
       <div class="allTasks">
         <h2>Lists</h2>
         <ul class="taskList d-flex flex-column align-items-start" data-lists>
@@ -41,19 +41,25 @@
           </div>
         </div>
         
-        <div>
+        <div class="flexy">
           <input type="text" id="taskTitle" data-create-task placeholder="Enter in task"name="taskTitle">
           <Button onclick="addNewTasks()" class="btn create ">+</Button>
         </div>
       </div>
-      <button class="btn clear" onclick="clearTasks()">Clear Tasks</button>
-      <button class="btn delete" onclick="deleteList()"data-delete-list-btn>Delete</button>
+      <button class="btn clear" onclick="clearCompletedTasks()">Clear Tasks</button>
+      <button class="btn delete" data-delete-list-btn>Delete</button>
     </div>
   </div>
-  <template id = "taskTemplate">
+  <template id = "taskTemplate" class="taskSwitch">
     <div class="tasks">
-      <input type="checkbox">
-      <label class="customCheck"></label>
+      <div class="allCenter">
+        <input type="checkbox" id=""onclick="checkOffTask()">
+        <label class="customCheck"></label>
+      </div>
+      <div class="flex allCenter">
+        <button class="roundedBtn">Edit</button>
+        <button class="roundedBtn">Delete</button>
+      </div>
     </div>
   </template>
 

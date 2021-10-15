@@ -1,44 +1,92 @@
+$baseColor: #9DA39A; 
+$betterBlack: #0e1317;
+%flexJust{
+  display: flex; 
+  justify-content: center; 
+}
+%flexAlign{
+  display: flex; 
+  align-items: center;
+}
+%flexCenterAll{
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+ }
 *{
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+label{
+  margin-left: .4rem;
+  font-size: 1.3rem;
+}
 nav{
-  background-color: aquamarine;
+  background-color: $baseColor;
+  border-bottom: 1px solid $betterBlack;
   height: 3rem;
 }
+.flexy{
+  @extend %flexAlign;
 
+  
+}
 .allTasks{
-  background-color: pink;
+  @extend %flexAlign;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 90vh;
+  border-right: 1px solid  $betterBlack;
+}
+.allCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .taskBox{
-  background-color: blanchedalmond;
   width: 100%;
-  height: 50vh;
+  min-height: 50vh;
   border: 1px solid black;
   border-radius: 15px;
-  .topTitle{
+  padding: .5rem;
+
+  .topTitle{ 
+    background-color: $baseColor;
     border-radius: 15px;
     height: 15%;
-    background-color: brown;
-   
-  }
-  .taskBody{
-
+    @extend %flexJust;
   }
 }
+.tasks{
+  @extend %flexAlign;
+  justify-content: space-between;
+  margin: .5rem;
+
+}
+input{
+  height: 2rem;
+}
 .btn{ 
-  background-color: blue;
+  // background-color: blue;
+  margin: .8rem;
+  border:1px solid $betterBlack;
+}
+.roundedBtn{
+  border-radius: 10px;
+  padding: .3rem;
+  margin: .3rem;
+  background-color: $baseColor;
+
 }
 ul{
   list-style-type: none;
 }
 li:hover{
-  color: gray;
+  color: $betterBlack;
   cursor: pointer;
   
 }
-
 
 
 

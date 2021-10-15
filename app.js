@@ -1,19 +1,7 @@
 
-let createId = (function(){
-  let finishedIds =[];
-  
-  function randomId(){
-    let number = Math.random().toFixed(4) ;
-    if(finishedIds.includes(number)){
-      randomId()
-    }else{
-      finishedIds.push(number);
-      return number;
-    }
-  }
-  return randomId; 
-  
-})();
+//to do 
+//make it so they can edit the task when they want to 
+//make it so that you can delete the tasks 
 
 const listContainer = document.querySelector('[data-lists]');
 const newListForm = document.querySelector('[data-new-list-form]');
@@ -30,7 +18,7 @@ const taskElement = document.getElementById('taskTemplate');
 const LOCALSTORAGELISTKEY = "LISTSKEY";
 const LOCALSTORAGESELECTELIST = "SELECTIEDLIST";
 let templists = localStorage.getItem(LOCALSTORAGELISTKEY)
-let lists = JSON.parse(templists) || [{id: 'tests', name :'testing'}];
+let lists = JSON.parse(templists) || [];
 let selectedList = JSON.parse(localStorage.getItem('LOCALSTORAGESELECTELIST'));
 
 listContainer.addEventListener('click', x => {
@@ -54,6 +42,22 @@ newListForm.addEventListener('submit', x => {
     save();
   }
 })
+
+//Create a randomly generated id 
+let createId = (function(){
+  let finishedIds =[];
+  
+  function randomId(){
+    let number = Math.random().toFixed(4) ;
+    if(finishedIds.includes(number)){
+      randomId()
+    }else{
+      finishedIds.push(number);
+      return number;
+    }
+  }
+  return randomId; 
+})();
 
 function createNewList(name) {
   return {id: createId(), name: name, tasks: []}
@@ -101,15 +105,13 @@ function addNewTasks() {
     return
   } else {
     let task = createTask(taskName);
-    // const selectedList1 = lists.find(list => list.id === selectedListObj.name);
-    
     selectedListObj.tasks.push(task)
     newTask.value =''; 
     render();
-    // renderTasks(selectedListObj);
     save();
   }
 }
+
 function renderTasks(selectedList) {
   selectedList.tasks.forEach(task =>{
     let taskHtml = document.importNode(taskElement.content, true)
@@ -121,8 +123,46 @@ function renderTasks(selectedList) {
     taskLabel.append(task.name);
     taskBody.appendChild(taskHtml)
   })
+}
+function checkOffTask() {
+  console.log(this.id)
+  this.completed = true; 
+}
+//Need to do
+//
+//
+function editATask(taskId) {
+  //get task id
+
+  //get content from that task
+
+  // delete the task 
+
+  //Put content into the input bar at the bottom 
+
 
 }
+function deleteATask(taskId) {
+  //get task id
+  
+  //splice that from the array 
+
+  //render entire list again 
+
+}
+function clearCompletedTasks() {
+  //Get the selected list 
+  // let selectedListObj = lists.find(list => list.id === selectedList);
+  
+  //search though the array of tasks to find which have the value of completed and push them to the array
+
+  //Splice the array
+
+  //render
+
+}
+
+
 
 function createTask(name){
   return {id: createId(), name: name, completed: false}
@@ -135,14 +175,14 @@ function clearElemnts(element) {
 }
 
 deleteListButton.addEventListener('click', () => {
+  displayContainer.style.display = null;
   console.log(selectedList)
   lists = lists.filter(list => list.id !== selectedList);
-  
-  console.log(lists)
+  console.log(lists);
+  listTitle.innerText = '';
   render();
   save();
 })
-
 render();
 
 
