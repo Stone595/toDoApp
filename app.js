@@ -3,6 +3,7 @@
 //make it so they can edit the task when they want to 
 //make it so that you can delete the tasks 
 
+//Data selectors
 const listContainer = document.querySelector('[data-lists]');
 const newListForm = document.querySelector('[data-new-list-form]');
 const newListName = document.querySelector('[data-new-list-name]');
@@ -15,12 +16,14 @@ const listCount = document.querySelector('[data-list-count]');
 const listTasks = document.querySelector('[data-tasks');
 const taskElement = document.getElementById('taskTemplate');
 
+//Local Storage Variables
 const LOCALSTORAGELISTKEY = "LISTSKEY";
 const LOCALSTORAGESELECTELIST = "SELECTIEDLIST";
 let templists = localStorage.getItem(LOCALSTORAGELISTKEY)
 let lists = JSON.parse(templists) || [];
 let selectedList = JSON.parse(localStorage.getItem('LOCALSTORAGESELECTELIST'));
 
+//Event Listeners
 listContainer.addEventListener('click', x => {
   if(x.target.tagName.toLowerCase() === 'li'){
     selectedList = x.target.dataset.listId;
@@ -43,6 +46,16 @@ newListForm.addEventListener('submit', x => {
   }
 })
 
+deleteListButton.addEventListener('click', () => {
+  displayContainer.style.display = null;
+  console.log(selectedList)
+  lists = lists.filter(list => list.id !== selectedList);
+  console.log(lists);
+  listTitle.innerText = '';
+  render();
+  save();
+})
+
 //Create a randomly generated id 
 let createId = (function(){
   let finishedIds =[];
@@ -59,15 +72,38 @@ let createId = (function(){
   return randomId; 
 })();
 
+//Create Elements
 function createNewList(name) {
   return {id: createId(), name: name, tasks: []}
 }
 
+function createTask(name){
+  return {id: createId(), name: name, completed: false}
+}
+
+function addNewTasks() {
+  let selectedListObj = lists.find(list => list.id === selectedList);
+  const taskName = newTask.value;
+  console.log(newTask.value)
+  if(!taskName || taskName == ""){
+    console.log('failed')
+    return
+  } else {
+    let task = createTask(taskName);
+    selectedListObj.tasks.push(task)
+    newTask.value =''; 
+    render();
+    save();
+  }
+}
+
+//Save function
 function save() {
   localStorage.setItem(LOCALSTORAGELISTKEY, JSON.stringify(lists));
   localStorage.setItem(LOCALSTORAGESELECTELIST, selectedList)
 }
 
+//Render Functions 
 function render(){
   renderLists();
   let selectedListObj = lists.find(list => list.id === selectedList);
@@ -96,21 +132,6 @@ function renderLists() {
   clearElemnts(taskBody);
   
 }
-function addNewTasks() {
-  let selectedListObj = lists.find(list => list.id === selectedList);
-  const taskName = newTask.value;
-  console.log(newTask.value)
-  if(!taskName || taskName == ""){
-    console.log('failed')
-    return
-  } else {
-    let task = createTask(taskName);
-    selectedListObj.tasks.push(task)
-    newTask.value =''; 
-    render();
-    save();
-  }
-}
 
 function renderTasks(selectedList) {
   selectedList.tasks.forEach(task =>{
@@ -118,22 +139,61 @@ function renderTasks(selectedList) {
     let actCheckBox = taskHtml.querySelector('input');
     actCheckBox.id = task.id; 
     actCheckBox.checked = task.completed;
+
     let taskLabel = taskHtml.querySelector('label');
     taskLabel.htmlfor = task.id; 
-    taskLabel.append(task.name);
-    taskBody.appendChild(taskHtml)
+
+    let deleteLabel = taskHtml.querySelector('[data-delete-id]');
+    deleteLabel.id = task.id; 
+
+    if(actCheckBox.checked === false){
+      taskLabel.append(task.name);
+      taskBody.appendChild(taskHtml)
+    } 
   })
 }
-function checkOffTask() {
-  console.log(this.id)
-  this.completed = true; 
-}
+
+// Alter Tasks 
+taskBody.addEventListener('click', e => {
+  if( e.target.tagName.toLowerCase() === 'input'){
+   let selectedListObj = lists.find(list => list.id === selectedList);
+   console.log(e.target.id)
+   let selectedTask = selectedListObj.tasks.find(task => task.id === e.target.id);
+   console.log(selectedTask)
+   selectedTask.completed = true; 
+   save();
+  }
+
+})
+taskBody.addEventListener('click', e => {
+  console.log(e.target.id)
+  if( e.target.tagName.toLowerCase() === 'button'){
+   console.log('got in')
+
+   let selectedListObj = lists.find(list => list.id === selectedList);
+   console.log(selectedListObj);
+   
+   console.log(e.target.id)
+   let selectedTask = selectedListObj.tasks.find(task => task.id === e.target.id);
+   console.log(selectedTask);
+   //splice the task 
+   selectedListObj.tasks = selectedListObj.tasks.filter(task => task.id !== selectedTask.id)
+  //render
+   save();
+   render();
+  } else{
+    console.log('failed')
+  }
+
+})
+
 //Need to do
 //
 //
 function editATask(taskId) {
   //get task id
-
+  let selectedListObj = lists.find(list => list.id === selectedList);
+  let selectedTask = selectedListObj.find(task => tasks.id === selectedTaskId)
   //get content from that task
 
   // delete the task 
@@ -152,21 +212,16 @@ function deleteATask(taskId) {
 }
 function clearCompletedTasks() {
   //Get the selected list 
-  // let selectedListObj = lists.find(list => list.id === selectedList);
-  
+  let selectedListObj = lists.find(list => list.id === selectedList);
   //search though the array of tasks to find which have the value of completed and push them to the array
-
-  //Splice the array
-
+  selectedListObj.tasks = selectedListObj.filter(tasks => !tasks.completed)
   //render
-
+  save();
+  render();
 }
 
 
 
-function createTask(name){
-  return {id: createId(), name: name, completed: false}
-}
 
 function clearElemnts(element) {
   while(element.firstChild){
@@ -174,15 +229,6 @@ function clearElemnts(element) {
   }
 }
 
-deleteListButton.addEventListener('click', () => {
-  displayContainer.style.display = null;
-  console.log(selectedList)
-  lists = lists.filter(list => list.id !== selectedList);
-  console.log(lists);
-  listTitle.innerText = '';
-  render();
-  save();
-})
 render();
 
 

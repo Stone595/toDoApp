@@ -46,19 +46,19 @@
           <Button onclick="addNewTasks()" class="btn create ">+</Button>
         </div>
       </div>
-      <button class="btn clear" onclick="clearCompletedTasks()">Clear Tasks</button>
+      <button class="btn clear" onclick="render()">Clear Completed Tasks</button>
       <button class="btn delete" data-delete-list-btn>Delete</button>
     </div>
   </div>
   <template id = "taskTemplate" class="taskSwitch">
     <div class="tasks">
       <div class="allCenter">
-        <input type="checkbox" id=""onclick="checkOffTask()">
+        <input type="checkbox" id=""onclick='checkOffTask()'>
         <label class="customCheck"></label>
       </div>
       <div class="flex allCenter">
-        <button class="roundedBtn">Edit</button>
-        <button class="roundedBtn">Delete</button>
+        <button class="roundedBtn" onclick="editATask()">Edit</button>
+        <button id="dltBtn"class="roundedBtn"  data-delete-id>Delete</button>
       </div>
     </div>
   </template>
@@ -67,5 +67,16 @@
 
 
 
+
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.0.slim.min.js" 
+  integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs="
+  crossorigin="anonymous">
+</script>
 </body>
 </html>
