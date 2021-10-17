@@ -1,8 +1,3 @@
-
-//to do 
-//make it so they can edit the task when they want to 
-//make it so that you can delete the tasks 
-
 //Data selectors
 const listContainer = document.querySelector('[data-lists]');
 const newListForm = document.querySelector('[data-new-list-form]');
@@ -146,6 +141,9 @@ function renderTasks(selectedList) {
     let deleteLabel = taskHtml.querySelector('[data-delete-id]');
     deleteLabel.id = task.id; 
 
+    let editLabel = taskHtml.querySelector('[data-edit-id]');
+    editLabel.id = task.id; 
+
     if(actCheckBox.checked === false){
       taskLabel.append(task.name);
       taskBody.appendChild(taskHtml)
@@ -154,6 +152,8 @@ function renderTasks(selectedList) {
 }
 
 // Alter Tasks 
+
+// check off the task
 taskBody.addEventListener('click', e => {
   if( e.target.tagName.toLowerCase() === 'input'){
    let selectedListObj = lists.find(list => list.id === selectedList);
@@ -165,51 +165,70 @@ taskBody.addEventListener('click', e => {
   }
 
 })
+
+//delete the task
+
 taskBody.addEventListener('click', e => {
   console.log(e.target.id)
-  if( e.target.tagName.toLowerCase() === 'button'){
-   console.log('got in')
-
+  if( e.target.innerText.toLowerCase() === 'delete'){
    let selectedListObj = lists.find(list => list.id === selectedList);
-   console.log(selectedListObj);
-   
-   console.log(e.target.id)
    let selectedTask = selectedListObj.tasks.find(task => task.id === e.target.id);
-   console.log(selectedTask);
-   //splice the task 
+   //delete the task 
    selectedListObj.tasks = selectedListObj.tasks.filter(task => task.id !== selectedTask.id)
   //render
    save();
    render();
-  } else{
-    console.log('failed')
   }
-
 })
 
 //Need to do
 //
 //
-function editATask(taskId) {
-  //get task id
-  let selectedListObj = lists.find(list => list.id === selectedList);
-  let selectedTask = selectedListObj.find(task => tasks.id === selectedTaskId)
-  //get content from that task
 
-  // delete the task 
+//editing a task 
 
-  //Put content into the input bar at the bottom 
+taskBody.addEventListener('click', e => {
+  if( e.target.innerText.toLowerCase() === 'edit'){
+   console.log('got in')
+    //find the selceted list
+   let selectedListObj = lists.find(list => list.id === selectedList);
+   console.log(selectedListObj, ' is the selected list')
+   //find the selected task 
+   let selectedTask = selectedListObj.tasks.find(task => task.id === e.target.id);
+    console.log(selectedTask)
+   //get the content from inside the selected task 
+   let taskText = selectedTask.name; 
+
+  //  //delete the task 
+   selectedListObj.tasks = selectedListObj.tasks.filter(task => task.id !== selectedTask.id);
+
+  //add the selected text to the input area 
+  newTask.value = taskText; 
+
+  // //render
+   save();
+   render();
+  } 
+
+})
 
 
-}
-function deleteATask(taskId) {
-  //get task id
-  
-  //splice that from the array 
 
-  //render entire list again 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function clearCompletedTasks() {
   //Get the selected list 
   let selectedListObj = lists.find(list => list.id === selectedList);
@@ -230,11 +249,4 @@ function clearElemnts(element) {
 }
 
 render();
-
-
-
-
-
-
-
 
